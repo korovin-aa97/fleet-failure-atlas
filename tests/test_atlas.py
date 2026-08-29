@@ -111,7 +111,7 @@ class FixtureTests(unittest.TestCase):
         process = cast(subprocess.Popen[bytes], process_mock)
         with (
             mock.patch("atlas.os.name", "posix"),
-            mock.patch("atlas.os.killpg", side_effect=PermissionError),
+            mock.patch("atlas.os.killpg", side_effect=PermissionError, create=True),
         ):
             atlas._kill_process(process)
         process_mock.kill.assert_not_called()
@@ -123,7 +123,7 @@ class FixtureTests(unittest.TestCase):
         process = cast(subprocess.Popen[bytes], process_mock)
         with (
             mock.patch("atlas.os.name", "posix"),
-            mock.patch("atlas.os.killpg", side_effect=PermissionError),
+            mock.patch("atlas.os.killpg", side_effect=PermissionError, create=True),
         ):
             atlas._kill_process(process)
         process_mock.kill.assert_called_once_with()
