@@ -5,6 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-7dd3fc.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/korovin-aa97/fleet-failure-atlas)](https://github.com/korovin-aa97/fleet-failure-atlas/releases)
 
+[![Fleet Failure Atlas turns a failure pattern into a safe reproduction, a clear detector, and a regression guard](docs/assets/social-preview.svg)](https://korovin-aa97.github.io/fleet-failure-atlas/)
+
 An executable field guide to autonomous coding-agent failures: reproduce the
 symptom, detect it, repair the invariant, and keep it from returning.
 

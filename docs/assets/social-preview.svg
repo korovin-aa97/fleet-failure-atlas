@@ -1,18 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
   <title id="title">Fleet Failure Atlas</title>
-  <desc id="desc">Executable failure patterns for autonomous coding-agent systems.</desc>
-  <defs><radialGradient id="g" cx="78%" cy="0%" r="90%"><stop offset="0" stop-color="#263f73"/><stop offset=".55" stop-color="#0b1020"/></radialGradient></defs>
-  <rect width="1280" height="640" fill="url(#g)"/>
-  <rect x="74" y="72" width="1132" height="496" rx="28" fill="#10182c" stroke="#38517a" stroke-width="2"/>
-  <g font-family="system-ui, -apple-system, sans-serif">
-    <text x="126" y="153" fill="#7dd3fc" font-size="24" font-weight="700" letter-spacing="5">REPRODUCE · DETECT · PREVENT</text>
-    <text x="126" y="259" fill="#ecf2ff" font-size="72" font-weight="800">Fleet Failure Atlas</text>
-    <text x="126" y="325" fill="#a9b7d0" font-size="31">Executable failure patterns for autonomous</text>
-    <text x="126" y="368" fill="#a9b7d0" font-size="31">coding-agent systems.</text>
-    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">
-      <rect x="126" y="428" width="296" height="60" rx="30" fill="#17233e" stroke="#263653"/><text x="158" y="466" fill="#4ade80">✓ safe fixture</text>
-      <rect x="446" y="428" width="275" height="60" rx="30" fill="#17233e" stroke="#263653"/><text x="479" y="466" fill="#facc15">◎ detector</text>
-      <rect x="745" y="428" width="339" height="60" rx="30" fill="#17233e" stroke="#263653"/><text x="778" y="466" fill="#7dd3fc">↻ regression proof</text>
+  <desc id="desc">Turn an autonomous coding-agent failure pattern into a safe reproduction, a clear detector, and a regression guard.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080b1a"/>
+      <stop offset="0.52" stop-color="#17102d"/>
+      <stop offset="1" stop-color="#25113b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f472b6"/>
+      <stop offset="0.5" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#67e8f9"/>
+    </linearGradient>
+    <linearGradient id="guard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#153f46"/>
+      <stop offset="1" stop-color="#18384b"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#03040c" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="640" rx="28" fill="url(#background)"/>
+  <circle cx="1125" cy="78" r="230" fill="#7c3aed" opacity="0.15"/>
+  <circle cx="1195" cy="580" r="280" fill="#06b6d4" opacity="0.08"/>
+  <circle cx="95" cy="620" r="220" fill="#ec4899" opacity="0.07"/>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, sans-serif">
+    <text x="72" y="92" fill="url(#accent)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" font-weight="700" letter-spacing="4">REPRODUCE · DETECT · PREVENT</text>
+    <text x="72" y="198" fill="#f8f7ff" font-size="76" font-weight="820" letter-spacing="-3">Fleet Failure Atlas</text>
+    <text x="72" y="254" fill="#c9c4dc" font-size="31">Turn agent failures into repeatable tests—and keep them fixed.</text>
+
+    <g filter="url(#shadow)">
+      <rect x="72" y="350" width="244" height="128" rx="20" fill="#29162f" stroke="#f472b6" stroke-width="2"/>
+      <circle cx="108" cy="386" r="16" fill="#f472b6"/>
+      <path d="M108 376V389M108 397V398" stroke="#29162f" stroke-width="4" stroke-linecap="round"/>
+      <text x="136" y="394" fill="#fce7f3" font-size="21" font-weight="750">FAILURE PATTERN</text>
+      <text x="100" y="442" fill="#c9c4dc" font-size="20">name the symptom</text>
+
+      <path d="M316 414H352" stroke="url(#accent)" stroke-width="4"/>
+      <path d="M342 403L356 414L342 425" fill="none" stroke="#c084fc" stroke-width="4"/>
+
+      <rect x="356" y="350" width="244" height="128" rx="20" fill="#251c43" stroke="#a78bfa" stroke-width="2"/>
+      <circle cx="392" cy="386" r="16" fill="#a78bfa"/>
+      <path d="M385 386L390 391L400 381" fill="none" stroke="#251c43" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="420" y="394" fill="#ede9fe" font-size="21" font-weight="750">REPRODUCE</text>
+      <text x="384" y="442" fill="#c9c4dc" font-size="20">run a safe fixture</text>
+
+      <path d="M600 414H636" stroke="url(#accent)" stroke-width="4"/>
+      <path d="M626 403L640 414L626 425" fill="none" stroke="#8b9ff8" stroke-width="4"/>
+
+      <rect x="640" y="350" width="244" height="128" rx="20" fill="#172d46" stroke="#67e8f9" stroke-width="2"/>
+      <circle cx="676" cy="386" r="16" fill="#67e8f9"/>
+      <circle cx="673" cy="383" r="6" fill="none" stroke="#172d46" stroke-width="3"/>
+      <path d="M678 388L684 394" stroke="#172d46" stroke-width="3" stroke-linecap="round"/>
+      <text x="704" y="394" fill="#cffafe" font-size="21" font-weight="750">DETECT</text>
+      <text x="668" y="442" fill="#c9c4dc" font-size="20">prove the signal</text>
+
+      <path d="M884 414H920" stroke="url(#accent)" stroke-width="4"/>
+      <path d="M910 403L924 414L910 425" fill="none" stroke="#5eead4" stroke-width="4"/>
+
+      <rect x="924" y="350" width="284" height="128" rx="20" fill="url(#guard)" stroke="#5eead4" stroke-width="2"/>
+      <path d="M960 370L977 378V390C977 402 969 410 960 414C951 410 943 402 943 390V378Z" fill="#5eead4"/>
+      <path d="M951 391L957 397L969 384" fill="none" stroke="#153f46" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="992" y="394" fill="#ccfbf1" font-size="21" font-weight="750">REGRESSION GUARD</text>
+      <text x="952" y="442" fill="#c9c4dc" font-size="20">keep the fix working</text>
     </g>
+
+    <text x="72" y="568" fill="#9d96b5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" letter-spacing="2">OPEN SOURCE · OFFLINE · SYNTHETIC EVIDENCE</text>
   </g>
 </svg>
