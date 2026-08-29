@@ -25,17 +25,17 @@ $ python3 atlas.py run FFA-001 --mode detect
 ... "detector_findings": ["head_sha_mismatch", "coverage_not_bound_to_head"] ...
 
 $ python3 atlas.py run FFA-001 --mode regress
-... "repaired_gate_accepts": false ...
+... "repaired_gate_accepts": false, "fresh_receipt_accepts": true ...
 ```
 
 The command succeeds when it proves the expected condition. In `reproduce`
 mode, that means the deliberately contained failure was reproduced. Run the
-complete release gate:
+dependency-free release gate and unit tests:
 
 ![Animated walkthrough from stale receipt to regression proof](docs/assets/demo.svg)
 
 ```bash
-python3 atlas.py check
+make check
 ```
 
 ## Browse the first collection
@@ -61,9 +61,9 @@ scope → observable signature → root mechanism
 ```
 
 Fixtures run offline in fresh temporary directories, receive a minimal
-environment, and are killed after five seconds. The runner checks their JSON
-evidence contract. See [safety and provenance](docs/SAFETY_AND_PROVENANCE.md)
-for the exact boundary.
+environment, and are killed after five seconds or 64 KiB per output stream. The
+runner checks their JSON evidence contract. See
+[safety and provenance](docs/SAFETY_AND_PROVENANCE.md) for the exact boundary.
 
 ## Regression-review skill
 
@@ -83,7 +83,7 @@ fails if their canonical checklists drift.
   model is “best”;
 - prose-only anecdotes without a reusable detector and defense contract.
 
-All v0.1.0 patterns are explicitly **hypothetical** clean-room reproductions.
+All current patterns are explicitly **hypothetical** clean-room reproductions.
 Executable evidence shows the mechanism; it does not imply a named organization
 experienced it.
 
@@ -99,6 +99,9 @@ python3 -m unittest discover -v
 python3 atlas.py run
 python3 atlas.py build-site --check
 ```
+
+CI also runs the pinned development audit in `requirements-dev.txt`: Ruff,
+Mypy, Bandit, Python 3.11–3.14 on Linux, and Python 3.11 on Windows.
 
 Each new executable entry needs one fixture that supports `reproduce`, `detect`,
 and `regress`. Unsafe fixtures are rejected even when the mechanism is

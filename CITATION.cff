@@ -7,6 +7,6 @@ authors:
     given-names: Alexander
 repository-code: "https://github.com/korovin-aa97/fleet-failure-atlas"
 url: "https://korovin-aa97.github.io/fleet-failure-atlas/"
-version: 0.1.0
-date-released: "2026-08-29"
+version: 0.1.1
+date-released: "2026-08-30"
 license: MIT

@@ -1,4 +1,4 @@
-.PHONY: validate fixtures test site check
+.PHONY: validate fixtures test site check quality audit
 
 validate:
 	python3 atlas.py validate
@@ -16,3 +16,11 @@ site:
 check:
 	python3 atlas.py check
 	python3 -m unittest discover -v
+
+quality:
+	ruff check .
+	ruff format --check .
+	mypy
+	bandit -q -r atlas.py fixtures
+
+audit: check quality

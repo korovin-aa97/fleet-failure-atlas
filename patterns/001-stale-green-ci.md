@@ -63,8 +63,10 @@ independently controlled policy.
 
 ## Regression check
 
-The regression mode sends the stale receipt through the repaired predicate and
-proves it is rejected.
+The regression mode sends both a stale receipt and a matching fresh receipt
+through the repaired predicate. It proves the stale receipt is rejected and
+the fresh, fully covered receipt is accepted, preventing an always-deny gate
+from masquerading as a repair.
 
 ```console
 python3 atlas.py run FFA-001 --mode regress

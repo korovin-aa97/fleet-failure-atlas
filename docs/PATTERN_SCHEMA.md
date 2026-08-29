@@ -15,7 +15,7 @@ matter. The validator parses `key: value` pairs without a YAML dependency.
 | `architectures` | Comma-separated affected system shapes. |
 | `provenance` | `observed`, `externally-reported`, or `hypothetical`. |
 | `status` | `executable` or `documented`. |
-| `fixture` | Safe Python file directly under `fixtures/`. |
+| `fixture` | Safe Python file directly under `fixtures/`, or `none` for a documented entry. |
 
 ## Required sections
 
@@ -48,7 +48,12 @@ prints one JSON object to stdout:
 `pass` means the fixture proved the expected property. In reproduce mode that
 property is the presence of the deliberately contained failure. The runner
 provides a fresh temporary directory, removes it after the process exits, and
-kills a fixture after five seconds.
+kills a fixture after five seconds or 64 KiB per output stream.
+
+An `executable` entry must name an existing `.py` fixture and implement all
+three modes. A defensive `documented` entry must use `fixture: none`; it appears
+in the atlas but is skipped by `atlas.py run`. The validator requires at least
+three executable entries in the collection.
 
 ## Provenance categories
 

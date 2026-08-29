@@ -40,8 +40,10 @@ background persistence, destructive actions, deliberate resource exhaustion, or
 writes outside the current temporary directory. The five-second timeout is a
 ceiling, not a target.
 
-If a mechanism cannot be safely reproduced, propose a defensive documented
-entry and explain why. Maintainers may still decline it.
+If a mechanism cannot be safely reproduced, propose a defensive entry with
+`status: documented` and `fixture: none`, and explain why. Documented entries
+must still include every required section, detector, repair invariant, and
+false-positive boundary. Maintainers may still decline them.
 
 ## External reports and copyright
 

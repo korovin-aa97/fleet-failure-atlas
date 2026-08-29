@@ -22,5 +22,5 @@ License: MIT
 - python3 atlas.py run
 - python3 atlas.py run FFA-001 --mode detect
 
-All v0.1.0 patterns are hypothetical clean-room reproductions. Do not infer a
+All current patterns are hypothetical clean-room reproductions. Do not infer a
 real incident from an atlas entry.

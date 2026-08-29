@@ -2,30 +2,40 @@
 """Safe synthetic fixture for FFA-002; no real worker or unbounded wait."""
 
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 PATTERN_ID = "FFA-002"
 
 
-def result(mode: str) -> dict:
-    worker_result = {"job_id": "demo-42", "state": "complete", "value": 7}
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise RuntimeError(message)
+
+
+def result(mode: str) -> dict[str, object]:
+    worker_job_id = "demo-42"
+    worker_state = "complete"
     guessed_artifact = Path("result.json")
     polls = 3
     artifact_seen = any(guessed_artifact.exists() for _ in range(polls))
-    evidence = {"worker_state": worker_result["state"], "artifact_seen": artifact_seen, "bounded_polls": polls}
+    evidence: dict[str, object] = {
+        "worker_state": worker_state,
+        "artifact_seen": artifact_seen,
+        "bounded_polls": polls,
+    }
     if mode == "reproduce":
-        assert worker_result["state"] == "complete" and not artifact_seen
+        require(worker_state == "complete" and not artifact_seen, "result mismatch not reproduced")
         evidence["failure"] = "parent waits on a path outside the worker result contract"
     elif mode == "detect":
-        findings = []
-        if worker_result["state"] == "complete" and not artifact_seen:
+        findings: list[str] = []
+        if worker_state == "complete" and not artifact_seen:
             findings.append("completed_result_ignored_while_artifact_missing")
-        assert findings
+        require(bool(findings), "detector did not identify the result-channel mismatch")
         evidence["detector_findings"] = findings
     elif mode == "regress":
-        consumed = worker_result if worker_result.get("state") == "complete" else None
-        assert consumed and consumed["job_id"] == "demo-42"
+        consumed_job_id = worker_job_id if worker_state == "complete" else None
+        require(consumed_job_id == "demo-42", "declared result channel was not consumed")
         evidence["consumed_result_channel"] = "inline-json"
         evidence["invariant"] = "producer and consumer share one declared result channel"
     else:

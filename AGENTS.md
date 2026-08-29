@@ -1,6 +1,6 @@
 # Fleet Failure Atlas — agent guide
 
-Current release: **v0.1.0**. Repository: public, maintainer-led, MIT licensed.
+Current release: **v0.1.1**. Repository: public, maintainer-led, MIT licensed.
 
 Read this file, `README.md`, `docs/PATTERN_SCHEMA.md`,
 `docs/SAFETY_AND_PROVENANCE.md`, and `CONTRIBUTING.md` before changing a pattern

@@ -5,10 +5,12 @@ The atlas must be safe to clone and run on an ordinary developer machine.
 ## Fixture containment
 
 The runner starts each fixture as a subprocess in a new temporary directory,
-passes no credential variables, enforces a five-second deadline, captures all
-output, and removes the directory afterward. Fixtures use synthetic data and
-the Python standard library. These controls reduce risk; code review remains
-mandatory because a subprocess is not a security sandbox.
+passes only an allowlist of non-secret runtime variables (and no `PATH`),
+enforces a five-second deadline and a 64 KiB ceiling per output stream,
+terminates its process group on POSIX, and removes the directory afterward.
+Fixtures use synthetic data and the Python standard library. These controls
+reduce accidental impact; code review remains mandatory because a subprocess
+is not a security sandbox.
 
 ## Rejected content
 

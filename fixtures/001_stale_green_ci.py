@@ -9,27 +9,39 @@ OLD_SHA = "1" * 40
 HEAD_SHA = "2" * 40
 
 
-def result(mode: str) -> dict:
-    receipt = {"name": "tests", "conclusion": "success", "head_sha": OLD_SHA, "covered": ["src/api.py"]}
-    candidate = {"head_sha": HEAD_SHA, "changed": ["src/api.py"]}
-    vulnerable_accepts = receipt["conclusion"] == "success"
-    stale = receipt["head_sha"] != candidate["head_sha"]
-    uncovered = sorted(set(candidate["changed"]) - set(receipt["covered"])) if not stale else candidate["changed"]
-    repaired_accepts = not stale and not uncovered and receipt["conclusion"] == "success"
-    evidence = {
-        "candidate_sha": candidate["head_sha"],
-        "receipt_sha": receipt["head_sha"],
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise RuntimeError(message)
+
+
+def result(mode: str) -> dict[str, object]:
+    changed = ["src/api.py"]
+    covered = ["src/api.py"]
+    fresh_receipt_sha = HEAD_SHA
+    fresh_covered = ["src/api.py"]
+    vulnerable_accepts = True
+    stale = OLD_SHA != HEAD_SHA
+    uncovered = changed if stale else sorted(set(changed) - set(covered))
+    repaired_accepts = not stale and not uncovered
+    fresh_receipt_accepts = fresh_receipt_sha == HEAD_SHA and not (
+        set(changed) - set(fresh_covered)
+    )
+    evidence: dict[str, object] = {
+        "candidate_sha": HEAD_SHA,
+        "receipt_sha": OLD_SHA,
         "vulnerable_gate_accepts": vulnerable_accepts,
     }
     if mode == "reproduce":
-        assert vulnerable_accepts and stale
+        require(vulnerable_accepts and stale, "stale successful receipt was not reproduced")
         evidence["failure"] = "a successful receipt for an older commit was accepted"
     elif mode == "detect":
-        assert stale and uncovered
+        require(stale and bool(uncovered), "detector did not find stale or unbound evidence")
         evidence["detector_findings"] = ["head_sha_mismatch", "coverage_not_bound_to_head"]
     elif mode == "regress":
-        assert not repaired_accepts
+        require(not repaired_accepts, "repaired gate accepted the stale receipt")
+        require(fresh_receipt_accepts, "repaired gate rejected a matching fresh receipt")
         evidence["repaired_gate_accepts"] = repaired_accepts
+        evidence["fresh_receipt_accepts"] = fresh_receipt_accepts
         evidence["invariant"] = "receipt SHA and changed-surface coverage must match the candidate"
     else:
         raise SystemExit(f"unsupported mode: {mode}")
