@@ -1,0 +1,26 @@
+# Fleet Failure Atlas
+
+> An executable field guide to autonomous coding-agent failures.
+
+Canonical repository: https://github.com/korovin-aa97/fleet-failure-atlas
+Searchable site: https://korovin-aa97.github.io/fleet-failure-atlas/
+Machine index: https://korovin-aa97.github.io/fleet-failure-atlas/atlas.json
+License: MIT
+
+## Core documents
+
+- README.md: product overview and quickstart
+- docs/PATTERN_SCHEMA.md: required entry and fixture contract
+- docs/SAFETY_AND_PROVENANCE.md: execution and evidence boundaries
+- CONTRIBUTING.md: contribution workflow
+- regression-review-checklist.md: human review checklist
+- skills/regression-review/SKILL.md: agent-consumable review skill
+
+## Commands
+
+- python3 atlas.py check
+- python3 atlas.py run
+- python3 atlas.py run FFA-001 --mode detect
+
+All v0.1.0 patterns are hypothetical clean-room reproductions. Do not infer a
+real incident from an atlas entry.

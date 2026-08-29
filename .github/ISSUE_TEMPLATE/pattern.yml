@@ -1,0 +1,45 @@
+name: Propose a failure pattern
+description: Suggest a safe, evidence-backed entry for the atlas.
+title: "[Pattern]: "
+labels: [pattern-proposal]
+body:
+  - type: markdown
+    attributes:
+      value: Read CONTRIBUTING.md and the safety model before filing.
+  - type: textarea
+    id: mechanism
+    attributes:
+      label: Failure mechanism
+      description: Describe one causal mechanism without private names or topology.
+    validations:
+      required: true
+  - type: textarea
+    id: signature
+    attributes:
+      label: Observable signature
+      description: What deterministic evidence distinguishes this failure?
+    validations:
+      required: true
+  - type: dropdown
+    id: provenance
+    attributes:
+      label: Provenance
+      options: [hypothetical, externally reported, observed]
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Safe fixture outline
+      description: Explain reproduce, detect, and regress modes and their resource bounds.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety declaration
+      options:
+        - label: The proposal contains no secret, personal data, private identifier, customer name, internal path, or proprietary topology.
+          required: true
+        - label: The fixture can run offline, without credentials, destructive actions, privileges, or uncontrolled resources.
+          required: true

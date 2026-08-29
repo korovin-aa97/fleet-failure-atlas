@@ -1,0 +1,82 @@
+[
+  {
+    "id": "FFA-001",
+    "slug": "stale-green-ci",
+    "title": "Stale green CI evidence",
+    "lifecycle": [
+      "verification",
+      "merge"
+    ],
+    "symptoms": [
+      "misleading-success",
+      "stale-evidence",
+      "coverage-gap"
+    ],
+    "architectures": [
+      "continuous-integration",
+      "automated-review"
+    ],
+    "provenance": "hypothetical",
+    "status": "executable"
+  },
+  {
+    "id": "FFA-002",
+    "slug": "artifact-poll-deadlock",
+    "title": "Result-channel mismatch",
+    "lifecycle": [
+      "orchestration",
+      "handoff"
+    ],
+    "symptoms": [
+      "timeout",
+      "phantom-wait",
+      "ignored-result"
+    ],
+    "architectures": [
+      "background-workers",
+      "multi-agent-orchestration"
+    ],
+    "provenance": "hypothetical",
+    "status": "executable"
+  },
+  {
+    "id": "FFA-003",
+    "slug": "concurrent-queue-loss",
+    "title": "Concurrent queue update loss",
+    "lifecycle": [
+      "coordination",
+      "persistence"
+    ],
+    "symptoms": [
+      "lost-update",
+      "silent-data-loss",
+      "clean-history"
+    ],
+    "architectures": [
+      "file-backed-queues",
+      "concurrent-workers"
+    ],
+    "provenance": "hypothetical",
+    "status": "executable"
+  },
+  {
+    "id": "FFA-004",
+    "slug": "timezone-dependent-test",
+    "title": "Timezone-dependent test",
+    "lifecycle": [
+      "testing",
+      "verification"
+    ],
+    "symptoms": [
+      "environment-drift",
+      "midnight-failure",
+      "flaky-test"
+    ],
+    "architectures": [
+      "test-suites",
+      "scheduled-agents"
+    ],
+    "provenance": "hypothetical",
+    "status": "executable"
+  }
+]

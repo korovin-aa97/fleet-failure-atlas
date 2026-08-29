@@ -1,9 +1,16 @@
-# Regression review checklist
+---
+name: regression-review
+description: Review a proposed code change for regressions outside its stated goal, including public API, configuration, errors, observability, data contracts, and test integrity.
+---
 
-Use this after checking whether a change satisfies its stated goal. It is a
-generic companion to the executable atlas: the checklist catches damage outside
-the intentionally changed line, while atlas patterns reproduce specific failure
-mechanisms.
+# Regression review
+
+## When to use
+
+Use after correctness review and before approving or merging a code change. Read
+the repository's local instructions first. Inspect the merge-base diff, relevant
+callers, tests, and CI evidence; do not trust a change author's summary as
+independent proof.
 
 <!-- checklist:start -->
 ## Contract walk
@@ -51,12 +58,9 @@ For every changed public function, command, schema, or event:
   all remaining assumptions.
 <!-- checklist:end -->
 
-## How to report
+## Output contract
 
-Report only actionable regressions. For each finding, include the affected
-contract, a concrete caller or scenario, the evidence checked, and the smallest
-credible repair. Separate proven defects from questions and hypotheses.
-
-The machine-oriented version lives at
-[`skills/regression-review/SKILL.md`](skills/regression-review/SKILL.md). Run
-`python3 atlas.py validate` to detect semantic drift between the two copies.
+Return either `APPROVED` or a short list of actionable findings. Each finding
+must identify the affected contract, concrete caller or scenario, evidence, and
+smallest credible repair. Label hypotheses. Do not report style preferences as
+regressions.

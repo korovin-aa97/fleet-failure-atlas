@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Executable failure patterns for autonomous coding-agent systems."><meta name="theme-color" content="#0b1020">
+<meta property="og:title" content="Timezone-dependent test"><meta property="og:description" content="Reproduce, detect, and prevent autonomous coding-agent failures.">
+<meta property="og:image" content="https://korovin-aa97.github.io/fleet-failure-atlas/assets/social-preview.png"><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><title>Timezone-dependent test</title>
+<style>:root{color-scheme:dark;--bg:#0b1020;--panel:#121a30;--ink:#ecf2ff;--muted:#a9b7d0;--accent:#7dd3fc;--line:#263653}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 0,#182849 0,var(--bg) 42%);color:var(--ink);font:16px/1.65 system-ui,sans-serif}
+main{max-width:980px;margin:auto;padding:64px 24px}a{color:var(--accent)}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-size:.75rem}
+h1{font-size:clamp(2.4rem,7vw,5.5rem);line-height:.98;max-width:850px;margin:.2em 0}.lede{font-size:1.2rem;color:var(--muted);max-width:720px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}.controls input,.controls select{background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:10px;font:inherit}
+.controls input{flex:1;min-width:240px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}.tag{display:inline-block;margin:3px 4px 3px 0;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem}
+.meta{color:var(--muted);font-size:.9rem}.pattern{max-width:780px}.pattern h2{margin-top:2.2em}.pattern pre{overflow:auto;background:#070b15;border:1px solid var(--line);padding:16px;border-radius:12px}.pattern code{background:#070b15;padding:.15em .35em;border-radius:4px}
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}@media(prefers-reduced-motion:no-preference){.card{transition:.15s ease}}</style></head><body><main><a href="../index.html">← All patterns</a><article class="pattern"><p class="meta">FFA-004 · hypothetical · executable</p><h1>Timezone-dependent test</h1>
+<h2 id="scope-and-affected-architecture">Scope and affected architecture</h2>
+<p>Applies to tests and scheduled automation that translate instants into calendar dates without declaring the intended timezone.</p>
+<h2 id="symptom-and-observable-signature">Symptom and observable signature</h2>
+<p>The same test passes in one environment and fails in another, commonly near UTC midnight or a daylight-saving boundary.</p>
+<ul>
+<li>datetime literals lack an offset or zone;</li>
+<li>assertions compare dates derived under different host settings;</li>
+<li>rerunning with a different <code>TZ</code> changes the result;</li>
+<li>failures cluster near day, month, year, or daylight-saving transitions.</li>
+</ul>
+<h2 id="root-mechanism">Root mechanism</h2>
+<p>An instant and a local calendar time are different concepts. A naive datetime or implicit host timezone lets the environment choose which date a test means.</p>
+<h2 id="minimal-safe-fixture">Minimal safe fixture</h2>
+<p>The fixture maps the stable instant <code>2026-01-01T23:30:00+00:00</code> to UTC and Europe/Madrid using its explicit UTC+01:00 offset at that winter instant. The dates differ, deterministically reproducing the boundary without relying on the host timezone database.</p>
+<pre><code>python3 atlas.py run FFA-004 --mode reproduce</code></pre>
+<h2 id="deterministic-detector">Deterministic detector</h2>
+<p>Reject naive datetime fixtures and any calendar-date assertion that lacks a declared timezone. The fixture demonstrates both findings without reading the host clock.</p>
+<pre><code>python3 atlas.py run FFA-004 --mode detect</code></pre>
+<h2 id="repair-invariant">Repair invariant</h2>
+<p>Represent an instant with an offset or UTC, declare the calendar timezone at the conversion boundary, and test named boundary cases directly.</p>
+<h2 id="regression-check">Regression check</h2>
+<p>The regression mode asserts the same instant becomes <code>2026-01-02T00:30:00+01:00</code> in Europe/Madrid.</p>
+<pre><code>python3 atlas.py run FFA-004 --mode regress</code></pre>
+<h2 id="false-positives-and-non-applicable-cases">False positives and non-applicable cases</h2>
+<p>A naive datetime is acceptable for a deliberately timezone-free domain value, such as a store&#x27;s recurring opening time, when no instant conversion occurs. Pinning everything to UTC is insufficient when the product rule is explicitly about a local civil date.</p>
+<h2 id="provenance">Provenance</h2>
+<p><strong>Hypothetical.</strong> The instant and assertion are constructed for this fixture. No named test suite or external incident is implied.</p></article><footer><a href="../index.html">Fleet Failure Atlas</a> · <a href="https://github.com/korovin-aa97/fleet-failure-atlas">GitHub</a> · MIT licensed</footer></main></body></html>

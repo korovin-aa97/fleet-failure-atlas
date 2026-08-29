@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Fleet Failure Atlas</title>
+  <desc id="desc">Executable failure patterns for autonomous coding-agent systems.</desc>
+  <defs><radialGradient id="g" cx="78%" cy="0%" r="90%"><stop offset="0" stop-color="#263f73"/><stop offset=".55" stop-color="#0b1020"/></radialGradient></defs>
+  <rect width="1280" height="640" fill="url(#g)"/>
+  <rect x="74" y="72" width="1132" height="496" rx="28" fill="#10182c" stroke="#38517a" stroke-width="2"/>
+  <g font-family="system-ui, -apple-system, sans-serif">
+    <text x="126" y="153" fill="#7dd3fc" font-size="24" font-weight="700" letter-spacing="5">REPRODUCE · DETECT · PREVENT</text>
+    <text x="126" y="259" fill="#ecf2ff" font-size="72" font-weight="800">Fleet Failure Atlas</text>
+    <text x="126" y="325" fill="#a9b7d0" font-size="31">Executable failure patterns for autonomous</text>
+    <text x="126" y="368" fill="#a9b7d0" font-size="31">coding-agent systems.</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">
+      <rect x="126" y="428" width="296" height="60" rx="30" fill="#17233e" stroke="#263653"/><text x="158" y="466" fill="#4ade80">✓ safe fixture</text>
+      <rect x="446" y="428" width="275" height="60" rx="30" fill="#17233e" stroke="#263653"/><text x="479" y="466" fill="#facc15">◎ detector</text>
+      <rect x="745" y="428" width="339" height="60" rx="30" fill="#17233e" stroke="#263653"/><text x="778" y="466" fill="#7dd3fc">↻ regression proof</text>
+    </g>
+  </g>
+</svg>

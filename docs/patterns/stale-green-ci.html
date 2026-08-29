@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Executable failure patterns for autonomous coding-agent systems."><meta name="theme-color" content="#0b1020">
+<meta property="og:title" content="Stale green CI evidence"><meta property="og:description" content="Reproduce, detect, and prevent autonomous coding-agent failures.">
+<meta property="og:image" content="https://korovin-aa97.github.io/fleet-failure-atlas/assets/social-preview.png"><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><title>Stale green CI evidence</title>
+<style>:root{color-scheme:dark;--bg:#0b1020;--panel:#121a30;--ink:#ecf2ff;--muted:#a9b7d0;--accent:#7dd3fc;--line:#263653}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 0,#182849 0,var(--bg) 42%);color:var(--ink);font:16px/1.65 system-ui,sans-serif}
+main{max-width:980px;margin:auto;padding:64px 24px}a{color:var(--accent)}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-size:.75rem}
+h1{font-size:clamp(2.4rem,7vw,5.5rem);line-height:.98;max-width:850px;margin:.2em 0}.lede{font-size:1.2rem;color:var(--muted);max-width:720px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}.controls input,.controls select{background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:10px;font:inherit}
+.controls input{flex:1;min-width:240px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}.tag{display:inline-block;margin:3px 4px 3px 0;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem}
+.meta{color:var(--muted);font-size:.9rem}.pattern{max-width:780px}.pattern h2{margin-top:2.2em}.pattern pre{overflow:auto;background:#070b15;border:1px solid var(--line);padding:16px;border-radius:12px}.pattern code{background:#070b15;padding:.15em .35em;border-radius:4px}
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}@media(prefers-reduced-motion:no-preference){.card{transition:.15s ease}}</style></head><body><main><a href="../index.html">← All patterns</a><article class="pattern"><p class="meta">FFA-001 · hypothetical · executable</p><h1>Stale green CI evidence</h1>
+<h2 id="scope-and-affected-architecture">Scope and affected architecture</h2>
+<p>Applies when a coding agent or automated reviewer uses CI results to authorize a merge. The pattern is platform-independent: the dangerous assumption is that a successful check name is sufficient evidence by itself.</p>
+<h2 id="symptom-and-observable-signature">Symptom and observable signature</h2>
+<p>A merge candidate appears green even though the evidence belongs to an older revision or never exercised the changed surface.</p>
+<ul>
+<li>the check receipt SHA differs from the candidate SHA;</li>
+<li>source changed after the latest successful receipt was produced;</li>
+<li>the receipt has no changed-surface coverage declaration;</li>
+<li>a job reports success after skipping every relevant command.</li>
+</ul>
+<h2 id="root-mechanism">Root mechanism</h2>
+<p>The gate validates the conclusion but not the identity or scope of the evidence. This turns a mutable status label into a capability to merge unrelated code.</p>
+<h2 id="minimal-safe-fixture">Minimal safe fixture</h2>
+<p>The fixture constructs two synthetic 40-character commit identities. A green receipt is attached to the first; the merge candidate points at the second. The vulnerable gate checks only <code>conclusion == success</code> and therefore accepts it.</p>
+<pre><code>python3 atlas.py run FFA-001 --mode reproduce</code></pre>
+<p>It uses no repository, network, token, or external CI system.</p>
+<h2 id="deterministic-detector">Deterministic detector</h2>
+<p>Compare the receipt&#x27;s exact <code>head_sha</code> with the candidate SHA, then verify that every changed path maps to a check the receipt actually ran. Missing identity or coverage data is itself a finding.</p>
+<pre><code>python3 atlas.py run FFA-001 --mode detect</code></pre>
+<h2 id="repair-invariant">Repair invariant</h2>
+<p>A merge is allowed only when a successful receipt is bound to the exact candidate revision and explicitly covers every changed surface under an independently controlled policy.</p>
+<h2 id="regression-check">Regression check</h2>
+<p>The regression mode sends the stale receipt through the repaired predicate and proves it is rejected.</p>
+<pre><code>python3 atlas.py run FFA-001 --mode regress</code></pre>
+<h2 id="false-positives-and-non-applicable-cases">False positives and non-applicable cases</h2>
+<p>Some CI systems intentionally reuse content-addressed results. That is safe only when the receipt also proves the relevant inputs, environment, and policy are identical. A human-readable branch name or check name is not such proof.</p>
+<h2 id="provenance">Provenance</h2>
+<p><strong>Hypothetical.</strong> This is a clean-room synthetic reproduction of a general evidence-binding failure, not a claim about a named organization or incident. GitHub&#x27;s public Checks API documents <code>head_sha</code> as part of a check-run receipt; see the <a href="https://github.com/korovin-aa97/fleet-failure-atlas/blob/main/docs/RELATED_WORK.md">related-work notes</a>.</p></article><footer><a href="../index.html">Fleet Failure Atlas</a> · <a href="https://github.com/korovin-aa97/fleet-failure-atlas">GitHub</a> · MIT licensed</footer></main></body></html>

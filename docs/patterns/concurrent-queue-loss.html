@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Executable failure patterns for autonomous coding-agent systems."><meta name="theme-color" content="#0b1020">
+<meta property="og:title" content="Concurrent queue update loss"><meta property="og:description" content="Reproduce, detect, and prevent autonomous coding-agent failures.">
+<meta property="og:image" content="https://korovin-aa97.github.io/fleet-failure-atlas/assets/social-preview.png"><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><title>Concurrent queue update loss</title>
+<style>:root{color-scheme:dark;--bg:#0b1020;--panel:#121a30;--ink:#ecf2ff;--muted:#a9b7d0;--accent:#7dd3fc;--line:#263653}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 0,#182849 0,var(--bg) 42%);color:var(--ink);font:16px/1.65 system-ui,sans-serif}
+main{max-width:980px;margin:auto;padding:64px 24px}a{color:var(--accent)}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-size:.75rem}
+h1{font-size:clamp(2.4rem,7vw,5.5rem);line-height:.98;max-width:850px;margin:.2em 0}.lede{font-size:1.2rem;color:var(--muted);max-width:720px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}.controls input,.controls select{background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:10px;font:inherit}
+.controls input{flex:1;min-width:240px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}.tag{display:inline-block;margin:3px 4px 3px 0;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem}
+.meta{color:var(--muted);font-size:.9rem}.pattern{max-width:780px}.pattern h2{margin-top:2.2em}.pattern pre{overflow:auto;background:#070b15;border:1px solid var(--line);padding:16px;border-radius:12px}.pattern code{background:#070b15;padding:.15em .35em;border-radius:4px}
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}@media(prefers-reduced-motion:no-preference){.card{transition:.15s ease}}</style></head><body><main><a href="../index.html">← All patterns</a><article class="pattern"><p class="meta">FFA-003 · hypothetical · executable</p><h1>Concurrent queue update loss</h1>
+<h2 id="scope-and-affected-architecture">Scope and affected architecture</h2>
+<p>Applies when several workers mutate a queue or registry stored as one file, then merge snapshots through a version-control system or shared filesystem.</p>
+<h2 id="symptom-and-observable-signature">Symptom and observable signature</h2>
+<p>One worker closes an item while another appends a new item. Both operations report success, the file remains syntactically valid, and the appended item is missing after the snapshots are reconciled.</p>
+<ul>
+<li>successful operations overlap in time;</li>
+<li>the missing stable ID appears in a producer receipt but not final state;</li>
+<li>conflict resolution selected an entire file from one side;</li>
+<li>repository history is clean, so ordinary conflict checks do not warn.</li>
+</ul>
+<h2 id="root-mechanism">Root mechanism</h2>
+<p>The system merges snapshots instead of logical operations. Choosing the remover&#x27;s complete file silently discards the producer&#x27;s append.</p>
+<h2 id="minimal-safe-fixture">Minimal safe fixture</h2>
+<p>The fixture creates two in-memory snapshots from the same two-item queue. One removes <code>job-a</code>; the other adds <code>job-c</code>. A whole-snapshot merge reproduces the loss without processes, locks, disk writes, or nondeterministic timing.</p>
+<pre><code>python3 atlas.py run FFA-003 --mode reproduce</code></pre>
+<h2 id="deterministic-detector">Deterministic detector</h2>
+<p>Compare acknowledged stable-key operations with the merged state. Any accepted append absent from the result becomes <code>accepted_operation_missing:&lt;id&gt;</code>.</p>
+<pre><code>python3 atlas.py run FFA-003 --mode detect</code></pre>
+<h2 id="repair-invariant">Repair invariant</h2>
+<p>Persist stable-key operations, apply them to the latest state, and publish with compare-and-swap semantics. On rejection, reload and replay the same idempotent operation; never force-push a stale snapshot.</p>
+<h2 id="regression-check">Regression check</h2>
+<p>The regression mode replays remove and append against current state. It proves the final IDs are exactly <code>job-b</code> and <code>job-c</code>.</p>
+<pre><code>python3 atlas.py run FFA-003 --mode regress</code></pre>
+<h2 id="false-positives-and-non-applicable-cases">False positives and non-applicable cases</h2>
+<p>A whole-file merge can be correct when there is a single writer or when the file is derived from an authoritative operation log. A missing ID is also legitimate when a later acknowledged removal targets that same ID.</p>
+<h2 id="provenance">Provenance</h2>
+<p><strong>Hypothetical.</strong> This is a synthetic lost-update fixture. It does not disclose or attribute a real queue, repository, organization, or incident.</p></article><footer><a href="../index.html">Fleet Failure Atlas</a> · <a href="https://github.com/korovin-aa97/fleet-failure-atlas">GitHub</a> · MIT licensed</footer></main></body></html>

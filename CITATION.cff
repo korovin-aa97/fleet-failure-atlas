@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If Fleet Failure Atlas helps your work, cite the repository and release."
+title: "Fleet Failure Atlas"
+type: software
+authors:
+  - family-names: Korovin
+    given-names: Alexander
+repository-code: "https://github.com/korovin-aa97/fleet-failure-atlas"
+url: "https://korovin-aa97.github.io/fleet-failure-atlas/"
+version: 0.1.0
+date-released: "2026-08-29"
+license: MIT
