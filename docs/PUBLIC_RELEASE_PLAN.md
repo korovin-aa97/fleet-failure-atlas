@@ -1,6 +1,6 @@
 # Maintainer release checklist
 
-Last exercised for v0.1.1 on 2026-08-30.
+Last exercised for v0.1.2 on 2026-08-30.
 
 ## Product gate
 

@@ -1,7 +1,9 @@
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from typing import cast
 from unittest import mock
 
 import atlas
@@ -101,6 +103,30 @@ class FixtureTests(unittest.TestCase):
             fixture.write_text("import sys\nsys.stdout.write('x' * 70000)\n", encoding="utf-8")
             with self.assertRaisesRegex(atlas.AtlasError, "output bytes"):
                 atlas._execute_fixture(fixture, "reproduce", temp_dir)
+
+    def test_kill_process_tolerates_macos_exit_race(self) -> None:
+        process_mock = mock.Mock(spec=subprocess.Popen)
+        process_mock.pid = 1234
+        process_mock.poll.side_effect = [None, 0]
+        process = cast(subprocess.Popen[bytes], process_mock)
+        with (
+            mock.patch("atlas.os.name", "posix"),
+            mock.patch("atlas.os.killpg", side_effect=PermissionError),
+        ):
+            atlas._kill_process(process)
+        process_mock.kill.assert_not_called()
+
+    def test_kill_process_falls_back_to_child_after_permission_error(self) -> None:
+        process_mock = mock.Mock(spec=subprocess.Popen)
+        process_mock.pid = 1234
+        process_mock.poll.side_effect = [None, None]
+        process = cast(subprocess.Popen[bytes], process_mock)
+        with (
+            mock.patch("atlas.os.name", "posix"),
+            mock.patch("atlas.os.killpg", side_effect=PermissionError),
+        ):
+            atlas._kill_process(process)
+        process_mock.kill.assert_called_once_with()
 
     def test_subprocess_environment_does_not_include_path_or_secrets(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

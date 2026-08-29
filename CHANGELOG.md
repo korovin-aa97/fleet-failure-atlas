@@ -4,6 +4,20 @@ All notable changes are documented here. The project follows
 [Semantic Versioning](https://semver.org/) for runner and schema compatibility;
 published pattern IDs remain stable.
 
+## [0.1.2] - 2026-08-30
+
+### Fixed
+
+- tolerate the macOS process-exit race where `killpg()` reports `EPERM` after
+  the bounded fixture has already finished;
+- fall back to terminating the owned child directly when the process remains
+  alive after a process-group permission error.
+
+### Changed
+
+- the README and repository social artwork now explain the nontechnical flow
+  from failure pattern through reproduction and detection to a regression guard.
+
 ## [0.1.1] - 2026-08-30
 
 ### Fixed
