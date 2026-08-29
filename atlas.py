@@ -8,7 +8,6 @@ exercise every public pattern without installing a package or starting a service
 from __future__ import annotations
 
 import argparse
-import contextlib
 import html
 import json
 import os
@@ -283,8 +282,19 @@ def _kill_process(process: subprocess.Popen[bytes]) -> None:
     if process.poll() is not None:
         return
     if os.name == "posix":
-        with contextlib.suppress(ProcessLookupError):
+        try:
             os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            return
+        except PermissionError:
+            # macOS can report EPERM when the child exits between poll() and
+            # killpg(). Re-check before falling back to the owned child PID.
+            if process.poll() is not None:
+                return
+            try:
+                process.kill()
+            except ProcessLookupError:
+                return
     else:
         process.kill()
 
