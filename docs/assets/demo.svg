@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="300" viewBox="0 0 960 300" role="img" aria-labelledby="title desc">
   <title id="title">FFA-001 fixture walkthrough</title>
   <desc id="desc">An animation cycles through reproduction, detection, and regression proof for stale CI evidence.</desc>
-  <rect width="960" height="300" rx="22" fill="#0b1020"/>
-  <rect x="28" y="26" width="904" height="248" rx="14" fill="#070b15" stroke="#263653"/>
-  <circle cx="57" cy="53" r="7" fill="#fb7185"/><circle cx="80" cy="53" r="7" fill="#facc15"/><circle cx="103" cy="53" r="7" fill="#4ade80"/>
+  <rect width="960" height="300" rx="22" fill="#120b24"/>
+  <rect x="28" y="26" width="904" height="248" rx="14" fill="#0b0715" stroke="#4c3472"/>
+  <circle cx="57" cy="53" r="7" fill="#c084fc"/><circle cx="80" cy="53" r="7" fill="#a78bfa"/><circle cx="103" cy="53" r="7" fill="#8b5cf6"/>
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">
     <text x="54" y="100" fill="#a9b7d0">$ python3 atlas.py run FFA-001 --mode</text>
-    <text x="540" y="100" fill="#7dd3fc">reproduce<animate attributeName="opacity" values="1;1;0;0;0;0;1" dur="9s" repeatCount="indefinite"/></text>
-    <text x="540" y="100" fill="#7dd3fc" opacity="0">detect<animate attributeName="opacity" values="0;0;1;1;0;0;0" dur="9s" repeatCount="indefinite"/></text>
-    <text x="540" y="100" fill="#7dd3fc" opacity="0">regress<animate attributeName="opacity" values="0;0;0;0;1;1;0" dur="9s" repeatCount="indefinite"/></text>
+    <text x="540" y="100" fill="#c084fc">reproduce<animate attributeName="opacity" values="1;1;0;0;0;0;1" dur="9s" repeatCount="indefinite"/></text>
+    <text x="540" y="100" fill="#c084fc" opacity="0">detect<animate attributeName="opacity" values="0;0;1;1;0;0;0" dur="9s" repeatCount="indefinite"/></text>
+    <text x="540" y="100" fill="#c084fc" opacity="0">regress<animate attributeName="opacity" values="0;0;0;0;1;1;0" dur="9s" repeatCount="indefinite"/></text>
     <g opacity="1"><animate attributeName="opacity" values="1;1;0;0;0;0;1" dur="9s" repeatCount="indefinite"/>
-      <text x="54" y="147" fill="#fb7185">FAILURE REPRODUCED</text><text x="54" y="183" fill="#ecf2ff">green receipt accepted for the wrong SHA</text>
+      <text x="54" y="147" fill="#c084fc">FAILURE REPRODUCED</text><text x="54" y="183" fill="#ecf2ff">green receipt accepted for the wrong SHA</text>
     </g>
     <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0;0" dur="9s" repeatCount="indefinite"/>
-      <text x="54" y="147" fill="#facc15">DETECTED</text><text x="54" y="183" fill="#ecf2ff">head_sha_mismatch · coverage_not_bound_to_head</text>
+      <text x="54" y="147" fill="#a78bfa">DETECTED</text><text x="54" y="183" fill="#ecf2ff">head_sha_mismatch · coverage_not_bound_to_head</text>
     </g>
     <g opacity="0"><animate attributeName="opacity" values="0;0;0;0;1;1;0" dur="9s" repeatCount="indefinite"/>
-      <text x="54" y="147" fill="#4ade80">REGRESSION PROOF PASSED</text><text x="54" y="183" fill="#ecf2ff">stale receipt rejected by the repaired gate</text>
+      <text x="54" y="147" fill="#8b5cf6">REGRESSION PROOF PASSED</text><text x="54" y="183" fill="#ecf2ff">stale receipt rejected by the repaired gate</text>
     </g>
     <text x="54" y="236" fill="#a9b7d0" font-size="15">offline · synthetic · deterministic · ≤5 seconds</text>
   </g>
