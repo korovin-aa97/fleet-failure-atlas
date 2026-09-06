@@ -17,16 +17,26 @@ deterministic detector, a repair contract, and a regression proof.
 **No package install. No service. No credentials. Python 3.11+ and five
 seconds per fixture.**
 
-## See the failure, then prove the defense
+## Quick start
+
+Clone the repository, then reproduce FFA-001 and prove its defense:
+
+```bash
+git clone --depth 1 https://github.com/korovin-aa97/fleet-failure-atlas.git
+cd fleet-failure-atlas
+python3 atlas.py run FFA-001 --mode reproduce
+python3 atlas.py run FFA-001 --mode detect
+python3 atlas.py run FFA-001 --mode regress
+```
+
+The fixture commands run offline after cloning and need no third-party package.
+Their evidence includes:
 
 ```console
-$ python3 atlas.py run FFA-001 --mode reproduce
 ... "vulnerable_gate_accepts": true ...
 
-$ python3 atlas.py run FFA-001 --mode detect
 ... "detector_findings": ["head_sha_mismatch", "coverage_not_bound_to_head"] ...
 
-$ python3 atlas.py run FFA-001 --mode regress
 ... "repaired_gate_accepts": false, "fresh_receipt_accepts": true ...
 ```
 

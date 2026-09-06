@@ -164,6 +164,9 @@ class SiteTests(unittest.TestCase):
         index = atlas.site_files()[Path("index.html")]
         self.assertIn('data-search="stale green ci evidence ffa-001 hypothetical executable', index)
         self.assertIn('data-stages="verification|merge"', index)
+        self.assertIn('href="patterns/stale-green-ci.html">Explore FFA-001</a>', index)
+        self.assertIn('fleet-failure-atlas#quick-start">Run it locally</a>', index)
+        self.assertIn("fixtures run offline after cloning", index)
         self.assertIn('id="result-count"', index)
         self.assertIn('id="empty-state"', index)
         self.assertIn("dataset.stages.split('|').includes(stage.value)", index)

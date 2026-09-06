@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Fleet Failure Atlas square launch card</title>
+  <desc id="desc">FFA-001 demonstrates stale green CI evidence through a safe reproduction, deterministic detector, and regression proof.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0818"/><stop offset="0.52" stop-color="#1a1030"/><stop offset="1" stop-color="#2b1745"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c084fc"/><stop offset="0.5" stop-color="#a78bfa"/><stop offset="1" stop-color="#7dd3fc"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#03040c" flood-opacity="0.5"/></filter>
+  </defs>
+  <rect width="1080" height="1080" rx="34" fill="url(#bg)"/>
+  <circle cx="960" cy="40" r="250" fill="#7c3aed" opacity="0.17"/>
+  <circle cx="980" cy="1040" r="360" fill="#7dd3fc" opacity="0.055"/>
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, sans-serif">
+    <text x="72" y="90" fill="url(#accent)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" letter-spacing="3">REPRODUCE · DETECT · PREVENT</text>
+    <text x="72" y="180" fill="#f8f7ff" font-size="69" font-weight="830" letter-spacing="-2.5">Fleet Failure</text>
+    <text x="72" y="253" fill="#f8f7ff" font-size="69" font-weight="830" letter-spacing="-2.5">Atlas</text>
+    <text x="72" y="310" fill="#c9c4dc" font-size="28">Executable failure patterns for coding-agent systems.</text>
+    <g filter="url(#shadow)">
+      <rect x="72" y="386" width="936" height="458" rx="28" fill="#100a20" stroke="#6d4aa2" stroke-width="2"/>
+      <rect x="72" y="386" width="936" height="70" rx="28" fill="#1d1230"/>
+      <circle cx="111" cy="421" r="8" fill="#c084fc"/><circle cx="139" cy="421" r="8" fill="#a78bfa"/><circle cx="167" cy="421" r="8" fill="#7dd3fc"/>
+      <text x="214" y="429" fill="#a9b7d0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">FFA-001 · STALE GREEN CI EVIDENCE</text>
+      <text x="112" y="520" fill="#c084fc" font-size="18" font-weight="780" letter-spacing="2">REPRODUCE</text>
+      <text x="112" y="558" fill="#f3e8ff" font-size="27" font-weight="720">green receipt accepted for the wrong SHA</text>
+      <path d="M112 611H900" stroke="#35254f" stroke-width="2"/>
+      <text x="112" y="662" fill="#a78bfa" font-size="18" font-weight="780" letter-spacing="2">DETECT</text>
+      <text x="112" y="700" fill="#ede9fe" font-size="27" font-weight="720">head_sha_mismatch · coverage_not_bound_to_head</text>
+      <path d="M112 753H900" stroke="#35254f" stroke-width="2"/>
+      <text x="112" y="804" fill="#7dd3fc" font-size="18" font-weight="780" letter-spacing="2">REGRESSION PROOF</text>
+      <text x="362" y="804" fill="#e0f2fe" font-size="25" font-weight="720">stale rejected · fresh accepted</text>
+    </g>
+    <text x="72" y="914" fill="#f8f7ff" font-size="24" font-weight="700">4 patterns · Python 3.11+ · MIT</text>
+    <text x="72" y="958" fill="#a9b7d0" font-size="21">No package install. No service. No credentials.</text>
+    <text x="72" y="1015" fill="#7dd3fc" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">korovin-aa97.github.io/fleet-failure-atlas</text>
+  </g>
+</svg>

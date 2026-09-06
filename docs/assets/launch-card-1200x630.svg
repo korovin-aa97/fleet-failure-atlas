@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Fleet Failure Atlas launch card</title>
+  <desc id="desc">An executable field guide that reproduces, detects, and prevents autonomous coding-agent failure mechanisms.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0818"/><stop offset="0.55" stop-color="#19102f"/><stop offset="1" stop-color="#2b1745"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c084fc"/><stop offset="0.55" stop-color="#a78bfa"/><stop offset="1" stop-color="#7dd3fc"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#03040c" flood-opacity="0.48"/></filter>
+  </defs>
+  <rect width="1200" height="630" rx="28" fill="url(#bg)"/>
+  <circle cx="1080" cy="50" r="230" fill="#7c3aed" opacity="0.16"/>
+  <circle cx="1110" cy="620" r="300" fill="#7dd3fc" opacity="0.06"/>
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, sans-serif">
+    <text x="64" y="70" fill="url(#accent)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" font-weight="700" letter-spacing="3">OPEN SOURCE · EXECUTABLE FIELD GUIDE</text>
+    <text x="64" y="150" fill="#f8f7ff" font-size="64" font-weight="820" letter-spacing="-2.5">Fleet Failure Atlas</text>
+    <text x="64" y="204" fill="#c9c4dc" font-size="27">Failures become useful when they become executable.</text>
+    <g filter="url(#shadow)">
+      <rect x="64" y="264" width="332" height="186" rx="20" fill="#28173d" stroke="#c084fc" stroke-width="2"/>
+      <text x="92" y="307" fill="#c084fc" font-size="16" font-weight="760" letter-spacing="2">01 · REPRODUCE</text>
+      <text x="92" y="353" fill="#f3e8ff" font-size="24" font-weight="720">Stale green receipt</text>
+      <text x="92" y="388" fill="#c9c4dc" font-size="19">accepted for the wrong SHA</text>
+      <text x="92" y="425" fill="#a9b7d0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">vulnerable_gate = true</text>
+      <rect x="434" y="264" width="332" height="186" rx="20" fill="#251c43" stroke="#a78bfa" stroke-width="2"/>
+      <text x="462" y="307" fill="#a78bfa" font-size="16" font-weight="760" letter-spacing="2">02 · DETECT</text>
+      <text x="462" y="353" fill="#ede9fe" font-size="24" font-weight="720">Bind the evidence</text>
+      <text x="462" y="388" fill="#c9c4dc" font-size="19">SHA mismatch + coverage gap</text>
+      <text x="462" y="425" fill="#a9b7d0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">2 deterministic findings</text>
+      <rect x="804" y="264" width="332" height="186" rx="20" fill="#211a3b" stroke="#7dd3fc" stroke-width="2"/>
+      <text x="832" y="307" fill="#7dd3fc" font-size="16" font-weight="760" letter-spacing="2">03 · REGRESS</text>
+      <text x="832" y="353" fill="#e0f2fe" font-size="24" font-weight="720">Prove the repair</text>
+      <text x="832" y="388" fill="#c9c4dc" font-size="19">stale rejected · fresh accepted</text>
+      <text x="832" y="425" fill="#a9b7d0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">regression proof = pass</text>
+    </g>
+    <text x="64" y="521" fill="#f8f7ff" font-size="21" font-weight="680">4 executable patterns · Python 3.11+ · no package install or credentials</text>
+    <text x="64" y="568" fill="#a9b7d0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">korovin-aa97.github.io/fleet-failure-atlas</text>
+    <rect x="1011" y="530" width="125" height="42" rx="21" fill="#7dd3fc"/>
+    <text x="1073.5" y="557" text-anchor="middle" fill="#0b1020" font-size="16" font-weight="800">MIT</text>
+  </g>
+</svg>
