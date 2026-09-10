@@ -4,6 +4,23 @@ All notable changes are documented here. The project follows
 [Semantic Versioning](https://semver.org/) for runner and schema compatibility;
 published pattern IDs remain stable.
 
+## [0.1.3] - 2026-09-10
+
+### Added
+
+- FFA-005, a clean-room executable model of an externally reported pattern
+  where a review is fresh for the current commit but a stored line citation
+  points to content that has moved;
+- a deterministic citation detector that resolves a stable rule ID and content
+  digest before rendering display line numbers.
+
+### Changed
+
+- document that provenance may be externally reported while fixtures remain
+  synthetic, offline, and vendor-independent;
+- distinguish freshness of an outer review receipt from the validity of
+  producer-authored evidence inside it.
+
 ## [0.1.2] - 2026-08-30
 
 ### Fixed

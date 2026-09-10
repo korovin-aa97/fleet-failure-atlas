@@ -78,5 +78,25 @@
     ],
     "provenance": "hypothetical",
     "status": "executable"
+  },
+  {
+    "id": "FFA-005",
+    "slug": "fresh-review-stale-citation",
+    "title": "Fresh review, stale citation",
+    "lifecycle": [
+      "review",
+      "verification"
+    ],
+    "symptoms": [
+      "citation-drift",
+      "misleading-freshness",
+      "stale-evidence"
+    ],
+    "architectures": [
+      "automated-review",
+      "policy-as-code"
+    ],
+    "provenance": "externally-reported",
+    "status": "executable"
   }
 ]

@@ -40,6 +40,14 @@ class AtlasValidationTests(unittest.TestCase):
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(len(slugs), len(set(slugs)))
 
+    def test_external_report_keeps_primary_source_and_synthetic_fixture(self) -> None:
+        pattern = next(
+            item for item in atlas.load_patterns() if item["metadata"]["id"] == "FFA-005"
+        )
+        self.assertEqual("externally-reported", pattern["metadata"]["provenance"])
+        self.assertIn("github.com/dannwaneri/rules-demo-api/pull/2", pattern["body"])
+        self.assertIn("independent clean-room model", pattern["body"])
+
     def test_parser_rejects_unclosed_front_matter(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

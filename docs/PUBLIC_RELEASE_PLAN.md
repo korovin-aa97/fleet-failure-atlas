@@ -1,6 +1,7 @@
 # Maintainer release checklist
 
-Last exercised for v0.1.2 on 2026-08-30.
+Last exercised for published v0.1.2 on 2026-08-30. The v0.1.3 candidate adds
+one externally reported pattern and must repeat every gate below before release.
 
 ## Product gate
 
@@ -18,7 +19,8 @@ Last exercised for v0.1.2 on 2026-08-30.
 - [x] Inventory classifies the source material and publication boundary.
 - [x] Current tree and history were reviewed for secrets, personal data,
   organization names, paths, incident identifiers, and private topology.
-- [x] All current incident-like claims are labelled hypothetical.
+- [x] Every incident-like claim has an explicit provenance label and a cited
+      primary source when labelled externally reported.
 - [x] Related work uses primary sources and records the check date.
 - [x] Exact project-name search was repeated on launch day.
 - [x] Unsafe reproduction classes and private reporting path are documented.
@@ -45,6 +47,20 @@ bandit -q -r atlas.py fixtures
 - [x] A clean clone passes the release gate before visibility changes.
 - [x] The Pages home, search interaction, pattern page, links, and responsive
   bounds were browser-checked.
+
+### v0.1.3 candidate verification — 2026-09-10
+
+- [x] FFA-005 passes `reproduce`, `detect`, and `regress` with synthetic data.
+- [x] Collection validation, safety scan, 20 unit tests, Ruff, strict MyPy,
+      Bandit, Actionlint, generated-site drift, and a copied-tree rehearsal pass.
+- [x] The generated home page exposes five patterns and the FFA-005 page renders
+      its metadata, commands, limitations, and two provenance links correctly.
+- [x] The external report and public pull request were checked read-only; the
+      entry separates reported facts from the clean-room fixture and makes no
+      frequency, impact, or internal-cause claim.
+- [ ] Commit and push the reviewed candidate after owner approval.
+- [ ] Confirm CI and Pages succeed for the exact pushed commit.
+- [ ] Publish and re-verify immutable GitHub Release v0.1.3.
 
 ## Packaging gate
 

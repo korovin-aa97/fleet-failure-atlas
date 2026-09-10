@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Executable failure patterns for autonomous coding-agent systems."><meta name="theme-color" content="#0b1020">
+<meta property="og:title" content="Fresh review, stale citation"><meta property="og:description" content="Reproduce, detect, and prevent autonomous coding-agent failures.">
+<meta property="og:image" content="https://korovin-aa97.github.io/fleet-failure-atlas/assets/social-preview.png"><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><title>Fresh review, stale citation</title>
+<style>:root{color-scheme:dark;--bg:#0b1020;--panel:#121a30;--ink:#ecf2ff;--muted:#a9b7d0;--accent:#7dd3fc;--line:#263653}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 0,#182849 0,var(--bg) 42%);color:var(--ink);font:16px/1.65 system-ui,sans-serif}
+main{max-width:980px;margin:auto;padding:64px 24px}a{color:var(--accent)}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-size:.75rem}
+h1{font-size:clamp(2.4rem,7vw,5.5rem);line-height:.98;max-width:850px;margin:.2em 0}.lede{font-size:1.2rem;color:var(--muted);max-width:720px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 10px}.button{display:inline-block;padding:10px 15px;border:1px solid var(--accent);border-radius:10px;text-decoration:none;font-weight:650}.button.primary{background:var(--accent);color:var(--bg)}.constraint{color:var(--muted);font-size:.9rem}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}.controls input,.controls select{background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:10px;font:inherit}
+.controls input{flex:1;min-width:240px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}.tag{display:inline-block;margin:3px 4px 3px 0;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem}
+.meta{color:var(--muted);font-size:.9rem}.pattern{max-width:780px}.pattern h2{margin-top:2.2em}.pattern pre{overflow:auto;background:#070b15;border:1px solid var(--line);padding:16px;border-radius:12px}.pattern code{background:#070b15;padding:.15em .35em;border-radius:4px}
+.result-count,.empty-state{color:var(--muted)}.empty-state{padding:24px 0}.skip-link{position:absolute;left:12px;top:-60px;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:8px;z-index:2}.skip-link:focus{top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}@media(prefers-reduced-motion:no-preference){.card{transition:.15s ease}}@media(max-width:400px){main{padding:42px 16px}h1{font-size:2.35rem}.controls input,.controls select{min-width:0;width:100%}.grid{grid-template-columns:minmax(0,1fr)}}</style></head><body><a class="skip-link" href="#main">Skip to content</a><main id="main"><a href="../index.html">← All patterns</a><article class="pattern"><p class="meta">FFA-005 · externally-reported · executable</p><h1>Fresh review, stale citation</h1>
+<h2 id="scope-and-affected-architecture">Scope and affected architecture</h2>
+<p>Applies when an automated reviewer re-runs for a new revision but carries human-readable citations forward from an earlier document layout. The outer review receipt can be fresh while a line range inside its evidence no longer identifies the claimed rule or code.</p>
+<h2 id="symptom-and-observable-signature">Symptom and observable signature</h2>
+<p>The review names the current commit and reports a recent run, yet following one of its citations opens unrelated content.</p>
+<ul>
+<li>the review receipt is bound to the current revision;</li>
+<li>a cited file still exists, but the claimed content moved;</li>
+<li>the displayed line range did not move with that content;</li>
+<li>another anchor generated from the same revision may point to the new line.</li>
+</ul>
+<h2 id="root-mechanism">Root mechanism</h2>
+<p>The producer stores a positional label and later rebuilds only the URL or commit part of the citation. Commit freshness and citation freshness become separate facts, but the consumer validates only the first. Line numbers are presentation coordinates, not stable evidence identity.</p>
+<h2 id="minimal-safe-fixture">Minimal safe fixture</h2>
+<p>The fixture starts with a synthetic rule at line 3, inserts four harmless lines above it, and models a new review receipt bound to the new synthetic head SHA. The receipt keeps the old line number, so the vulnerable gate accepts a fresh review whose citation now resolves to a heading instead of the rule.</p>
+<pre><code>python3 atlas.py run FFA-005 --mode reproduce</code></pre>
+<p>The fixture is offline and uses only in-memory strings and synthetic commit identities.</p>
+<h2 id="deterministic-detector">Deterministic detector</h2>
+<p>Resolve every citation against the exact referenced revision and compare the retrieved content with the stable rule ID or expected content digest. Report both a content mismatch and positional drift when the anchor exists elsewhere in the same file.</p>
+<pre><code>python3 atlas.py run FFA-005 --mode detect</code></pre>
+<h2 id="repair-invariant">Repair invariant</h2>
+<p>Stable rule identity or a content anchor selects evidence from the exact referenced blob. File and line ranges are then rendered from that retrieval for display; a cached range never serves as the identity of the rule.</p>
+<h2 id="regression-check">Regression check</h2>
+<p>The repaired fixture locates the stable rule ID in the current document, verifies its content digest, and only then emits the current line number. It proves that moving unchanged content does not detach the citation from its meaning.</p>
+<pre><code>python3 atlas.py run FFA-005 --mode regress</code></pre>
+<h2 id="false-positives-and-non-applicable-cases">False positives and non-applicable cases</h2>
+<p>A line range can be reliable when the cited blob itself is immutable and the range was computed from that exact blob. Stable anchors can also be ambiguous; duplicate or missing IDs must fail closed rather than selecting the first match. The detector validates citation integrity, not whether the cited prose is a correct or sufficiently precise policy.</p>
+<h2 id="provenance">Provenance</h2>
+<p><strong>Externally reported.</strong> A public <a href="https://dev.to/pm25coder/comment/3eh4b">DEV discussion</a> identified the split between a fresh review and stale citations and linked a <a href="https://github.com/dannwaneri/rules-demo-api/pull/2">public reproduction pull request</a>. On 2026-09-10, the public review page said the review was updated through commit <code>3ffacd9</code> while its body still displayed earlier line ranges for the cited rule and source. The fixture above is an independent clean-room model with synthetic text and identities; it copies no repository content and makes no claim about frequency, impact, or cause inside the named review service.</p></article><footer><a href="../index.html">Fleet Failure Atlas</a> · <a href="https://github.com/korovin-aa97/fleet-failure-atlas">GitHub</a> · MIT licensed</footer></main></body></html>

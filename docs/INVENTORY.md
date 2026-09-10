@@ -1,8 +1,8 @@
 # Release inventory and clean-room classification
 
-Reviewed: 2026-08-29. This inventory records what was considered for v0.1.0 and
-why it is safe to publish. It intentionally contains no private system names,
-paths, identities, incidents, or topology.
+Reviewed: 2026-09-10. This inventory records what was considered for the
+published collection and why it is safe to publish. It intentionally contains
+no private system names, paths, identities, incidents, or topology.
 
 | Candidate | Classification | Release decision | Sanitization/evidence decision |
 | --- | --- | --- | --- |
@@ -10,15 +10,18 @@ paths, identities, incidents, or topology.
 | Result-channel mismatch | Public after abstraction | `FFA-002` | In-memory result and bounded path checks; no orchestrator protocol details. |
 | Concurrent queue update loss | Public after abstraction | `FFA-003` | In-memory stable-key operations; no real queue, branch, or storage topology. |
 | Timezone-dependent test | Public as-is | `FFA-004` | Constructed instant and public IANA timezone only. |
+| Fresh review, stale citation | Public external report plus abstraction | `FFA-005` | Cite the public report/PR; reproduce only with synthetic text, SHAs, anchors, and ranges. |
 | Private operational incidents | Internal-only | Excluded | No incident narrative or identifiers were imported. |
 | Orchestrator implementation details | Commercial know-how | Excluded | Only the generic result-channel invariant is documented. |
 
 ## Claim audit
 
-All four v0.1.0 entries are labelled `hypothetical`. Their mechanisms are
-demonstrated by safe fixtures; none is presented as evidence that a named team,
-vendor, or product experienced the failure. The related-work page explains the
-adjacent public projects without claiming they endorse this atlas.
+All four v0.1.0 entries are labelled `hypothetical`. FFA-005 is labelled
+`externally-reported` because its occurrence is supported by a public discussion
+and pull request. Its fixture remains a clean-room synthetic mechanism and does
+not attribute frequency, impact, or internal cause to the named service. The
+related-work page explains adjacent public projects without claiming they
+endorse this atlas.
 
 ## Publication boundary
 
