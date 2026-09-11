@@ -41,12 +41,18 @@ class AtlasValidationTests(unittest.TestCase):
         self.assertEqual(len(slugs), len(set(slugs)))
 
     def test_external_report_keeps_primary_source_and_synthetic_fixture(self) -> None:
-        pattern = next(
+        citation_pattern = next(
             item for item in atlas.load_patterns() if item["metadata"]["id"] == "FFA-005"
         )
-        self.assertEqual("externally-reported", pattern["metadata"]["provenance"])
-        self.assertIn("github.com/dannwaneri/rules-demo-api/pull/2", pattern["body"])
-        self.assertIn("independent clean-room model", pattern["body"])
+        no_op_pattern = next(
+            item for item in atlas.load_patterns() if item["metadata"]["id"] == "FFA-006"
+        )
+        self.assertEqual("externally-reported", citation_pattern["metadata"]["provenance"])
+        self.assertIn("github.com/dannwaneri/rules-demo-api/pull/2", citation_pattern["body"])
+        self.assertIn("independent clean-room model", citation_pattern["body"])
+        self.assertEqual("externally-reported", no_op_pattern["metadata"]["provenance"])
+        self.assertIn("dev.to/to21as/comment/3ehnm", no_op_pattern["body"])
+        self.assertIn("independent clean-room model", no_op_pattern["body"])
 
     def test_parser_rejects_unclosed_front_matter(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

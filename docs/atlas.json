@@ -98,5 +98,26 @@
     ],
     "provenance": "externally-reported",
     "status": "executable"
+  },
+  {
+    "id": "FFA-006",
+    "slug": "green-noop-test-evidence",
+    "title": "Green no-op test evidence",
+    "lifecycle": [
+      "testing",
+      "verification",
+      "merge"
+    ],
+    "symptoms": [
+      "misleading-success",
+      "skipped-tests",
+      "evidence-unavailable"
+    ],
+    "architectures": [
+      "continuous-integration",
+      "integration-testing"
+    ],
+    "provenance": "externally-reported",
+    "status": "executable"
   }
 ]

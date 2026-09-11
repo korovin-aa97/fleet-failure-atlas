@@ -1,6 +1,6 @@
 # Maintainer release checklist
 
-Last exercised for published v0.1.2 on 2026-08-30. The v0.1.3 candidate adds
+Last exercised for published v0.1.3 on 2026-09-10. The v0.1.4 candidate adds
 one externally reported pattern and must repeat every gate below before release.
 
 ## Product gate
@@ -48,19 +48,19 @@ bandit -q -r atlas.py fixtures
 - [x] The Pages home, search interaction, pattern page, links, and responsive
   bounds were browser-checked.
 
-### v0.1.3 candidate verification — 2026-09-10
+### v0.1.4 candidate verification — 2026-09-11
 
-- [x] FFA-005 passes `reproduce`, `detect`, and `regress` with synthetic data.
+- [x] FFA-006 passes `reproduce`, `detect`, and `regress` with synthetic data.
 - [x] Collection validation, safety scan, 20 unit tests, Ruff, strict MyPy,
       Bandit, Actionlint, generated-site drift, and a copied-tree rehearsal pass.
-- [x] The generated home page exposes five patterns and the FFA-005 page renders
-      its metadata, commands, limitations, and two provenance links correctly.
-- [x] The external report and public pull request were checked read-only; the
-      entry separates reported facts from the clean-room fixture and makes no
-      frequency, impact, or internal-cause claim.
+- [x] The generated home page exposes six patterns and the FFA-006 page renders
+      its metadata, commands, limitations, and provenance links correctly.
+- [x] The public reports were checked read-only; the entry separates reported
+      facts from the clean-room fixture and makes no frequency, impact, or
+      internal-cause claim.
 - [ ] Commit and push the reviewed candidate after owner approval.
 - [ ] Confirm CI and Pages succeed for the exact pushed commit.
-- [ ] Publish and re-verify immutable GitHub Release v0.1.3.
+- [ ] Publish and re-verify immutable GitHub Release v0.1.4.
 
 ## Packaging gate
 

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Executable failure patterns for autonomous coding-agent systems."><meta name="theme-color" content="#0b1020">
+<meta property="og:title" content="Green no-op test evidence"><meta property="og:description" content="Reproduce, detect, and prevent autonomous coding-agent failures.">
+<meta property="og:image" content="https://korovin-aa97.github.io/fleet-failure-atlas/assets/social-preview.png"><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><title>Green no-op test evidence</title>
+<style>:root{color-scheme:dark;--bg:#0b1020;--panel:#121a30;--ink:#ecf2ff;--muted:#a9b7d0;--accent:#7dd3fc;--line:#263653}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% 0,#182849 0,var(--bg) 42%);color:var(--ink);font:16px/1.65 system-ui,sans-serif}
+main{max-width:980px;margin:auto;padding:64px 24px}a{color:var(--accent)}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-size:.75rem}
+h1{font-size:clamp(2.4rem,7vw,5.5rem);line-height:.98;max-width:850px;margin:.2em 0}.lede{font-size:1.2rem;color:var(--muted);max-width:720px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 10px}.button{display:inline-block;padding:10px 15px;border:1px solid var(--accent);border-radius:10px;text-decoration:none;font-weight:650}.button.primary{background:var(--accent);color:var(--bg)}.constraint{color:var(--muted);font-size:.9rem}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0}.controls input,.controls select{background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:10px;font:inherit}
+.controls input{flex:1;min-width:240px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:color-mix(in srgb,var(--panel) 90%,transparent);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}.tag{display:inline-block;margin:3px 4px 3px 0;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem}
+.meta{color:var(--muted);font-size:.9rem}.pattern{max-width:780px}.pattern h2{margin-top:2.2em}.pattern pre{overflow:auto;background:#070b15;border:1px solid var(--line);padding:16px;border-radius:12px}.pattern code{background:#070b15;padding:.15em .35em;border-radius:4px}
+.result-count,.empty-state{color:var(--muted)}.empty-state{padding:24px 0}.skip-link{position:absolute;left:12px;top:-60px;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:8px;z-index:2}.skip-link:focus{top:12px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted)}@media(prefers-reduced-motion:no-preference){.card{transition:.15s ease}}@media(max-width:400px){main{padding:42px 16px}h1{font-size:2.35rem}.controls input,.controls select{min-width:0;width:100%}.grid{grid-template-columns:minmax(0,1fr)}}</style></head><body><a class="skip-link" href="#main">Skip to content</a><main id="main"><a href="../index.html">← All patterns</a><article class="pattern"><p class="meta">FFA-006 · externally-reported · executable</p><h1>Green no-op test evidence</h1>
+<h2 id="scope-and-affected-architecture">Scope and affected architecture</h2>
+<p>Applies when a required CI producer can finish successfully without executing the checks that make its result useful. The skip decision may live inside a test process, so the surrounding job keeps its expected name and green conclusion even though required evidence was never produced.</p>
+<h2 id="symptom-and-observable-signature">Symptom and observable signature</h2>
+<p>The exact candidate revision has a successful required job, but its structured test result reports zero executed tests.</p>
+<ul>
+<li>expected test work is positive;</li>
+<li>every required test is skipped or filtered out;</li>
+<li>the job conclusion is still <code>success</code>;</li>
+<li>a missing prerequisite is described as a skip instead of unavailable evidence.</li>
+</ul>
+<h2 id="root-mechanism">Root mechanism</h2>
+<p>The gate validates the outer producer identity and conclusion but not the applicability decision or the producer&#x27;s structured counts. One process acts as both test runner and applicability judge, yet only the runner has a check name. Consequently, “the contract passed” and “the contract was not evaluated” have the same external status.</p>
+<h2 id="minimal-safe-fixture">Minimal safe fixture</h2>
+<p>The fixture builds one in-memory receipt for the exact synthetic head SHA. It records two expected tests, zero executed tests, two skipped tests, and an unavailable prerequisite while the outer job reports success. A conclusion-only gate accepts it.</p>
+<pre><code>python3 atlas.py run FFA-006 --mode reproduce</code></pre>
+<p>The fixture is offline, deterministic, and uses only synthetic identities and test counts. It does not read environment variables or credentials.</p>
+<h2 id="deterministic-detector">Deterministic detector</h2>
+<p>Validate a normalized structured test report in a separate required check. For an applicable required suite, require <code>expected &gt; 0</code>, <code>executed == expected</code>, <code>failed == 0</code>, and <code>skipped == 0</code>. Report unavailable evidence separately when a required prerequisite is absent; a green outer conclusion cannot override it.</p>
+<pre><code>python3 atlas.py run FFA-006 --mode detect</code></pre>
+<p>The fixture emits stable findings for zero executed tests, required skips, and unavailable evidence incorrectly paired with success.</p>
+<h2 id="repair-invariant">Repair invariant</h2>
+<p>Applicability and execution are independently visible evidence. Required work has positive, complete structured counts. Missing prerequisites fail closed as <code>evidence_unavailable</code>. A genuinely non-applicable change is accepted only when an independently controlled named decision records <code>not_applicable</code> with a policy-approved reason.</p>
+<h2 id="regression-check">Regression check</h2>
+<p>Regression mode rejects the green no-op receipt, accepts a complete two-test receipt, and accepts an explicit documentation-only non-applicability decision. The positive cases prevent an always-deny predicate from masquerading as the repair.</p>
+<pre><code>python3 atlas.py run FFA-006 --mode regress</code></pre>
+<h2 id="false-positives-and-non-applicable-cases">False positives and non-applicable cases</h2>
+<p>Zero executed tests are not automatically a failure when policy proves that no required test surface applies. That decision must be separate from a producer whose own work is being judged, name the deciding check, and carry a bounded reason. Optional tests may be skipped if they are outside the required set. Structured counts prove that declared work ran; they do not prove test quality or that a producer reported its own behavior honestly.</p>
+<h2 id="provenance">Provenance</h2>
+<p><strong>Externally reported.</strong> A public <a href="https://dev.to/to21as/comment/3ehnm">DEV comment</a> described a required test job that exited successfully after its suites selected an internal skip path because a prerequisite was missing. A second public <a href="https://dev.to/pm25coder/comment/3ei6l">analysis</a> proposed making applicability nameable and validating structured test counts independently. The fixture is an independent clean-room model with generic counts and synthetic identities. It copies no code or repository data and makes no claim about frequency, impact, or the internal design of any named test framework.</p></article><footer><a href="../index.html">Fleet Failure Atlas</a> · <a href="https://github.com/korovin-aa97/fleet-failure-atlas">GitHub</a> · MIT licensed</footer></main></body></html>

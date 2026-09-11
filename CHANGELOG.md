@@ -4,6 +4,22 @@ All notable changes are documented here. The project follows
 [Semantic Versioning](https://semver.org/) for runner and schema compatibility;
 published pattern IDs remain stable.
 
+## [0.1.4] - 2026-09-11
+
+### Added
+
+- FFA-006, a clean-room executable model of an externally reported required
+  test job that reports success after executing no tests;
+- deterministic findings for zero executed tests, required skips, and missing
+  prerequisites misclassified as successful evidence.
+
+### Changed
+
+- make applicability an independently nameable decision and distinguish
+  `evidence_unavailable` from a policy-approved `not_applicable` result;
+- require positive complete structured counts for applicable required test
+  evidence while preserving an explicit non-applicable path.
+
 ## [0.1.3] - 2026-09-10
 
 ### Added

@@ -59,6 +59,7 @@ make check
 | [FFA-003](patterns/003-concurrent-queue-loss.md) | Concurrent queue update loss | Accepted stable ID disappears | Coordination, persistence |
 | [FFA-004](patterns/004-timezone-test.md) | Timezone-dependent test | Same instant, different date | Testing, verification |
 | [FFA-005](patterns/005-fresh-review-stale-citation.md) | Fresh review, stale citation | Current review links to moved content | Review, verification |
+| [FFA-006](patterns/006-green-noop-test-evidence.md) | Green no-op test evidence | Successful job, zero executed tests | Testing, verification, merge |
 
 Use the [searchable web atlas](https://korovin-aa97.github.io/fleet-failure-atlas/)
 to filter by symptom or lifecycle stage. Agents can consume
@@ -97,9 +98,9 @@ fails if their canonical checklists drift.
 - prose-only anecdotes without a reusable detector and defense contract.
 
 FFA-001 through FFA-004 are explicitly **hypothetical** clean-room
-reproductions. FFA-005 is based on a cited public report and uses an independent
-synthetic fixture. Executable evidence shows each mechanism; provenance labels
-state whether a real occurrence is being claimed.
+reproductions. FFA-005 and FFA-006 are based on cited public reports and use
+independent synthetic fixtures. Executable evidence shows each mechanism;
+provenance labels state whether a real occurrence is being claimed.
 
 ## Contribute a pattern
 
